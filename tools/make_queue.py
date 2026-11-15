@@ -17,7 +17,11 @@ def tip(n, cat, text):
     return photo(f'MisterGo_Tip_{n:02d}.jpg', f'نصيحة اليوم من مستر غو 🎩 ({cat})\n{text}\n\nشارك النصيحة مع حدا بتحبو 💛\n{TIP_TAGS}')
 
 Q = {}
-def add(date, slot, post): Q.setdefault(f'{date}-{slot}', []).append(post)
+def add(date, slot, post):
+    # December: Instagram/Threads/Pinterest/TikTok go through Metricool, Make does Facebook + YouTube only
+    if date >= '2026-12-01':
+        post = dict(post, platforms='fb,yt' if post['kind'] == 'reel' else 'fb')
+    Q.setdefault(f'{date}-{slot}', []).append(post)
 
 # ---------- 18:00 posters ----------
 add('2026-11-16', 18, tip(9, 'توازن', 'كل ساعة قدام الشاشة… ريّح عيونك 5 دقايق.'))
